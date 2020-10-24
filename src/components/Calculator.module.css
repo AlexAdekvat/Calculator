@@ -1,0 +1,13 @@
+.wrapper{
+    align-items: center;
+    height: 4em;
+    font-weight: lighter;
+    font-size: 1.4em;
+    background-color: blueviolet;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #888888;
+}
