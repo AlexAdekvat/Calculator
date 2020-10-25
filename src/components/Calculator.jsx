@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styles from './Calculator.module.css'
 
 const Calculator = () => {
-    const [data, setData] = useState("");
+    const [calculator, setCalculator] = useState("");
     const calcBtn = [];
-    [7, 8, 9, 4, 5, 6, 1, 2, 3, ".", 0, "%"].forEach(item => {
+     [7, 4, 1, ".", 8, 5, 2, 0, 9, 6, 3].forEach(item => {
         calcBtn.push(
-            <button onClick={e => {
-                setData(data + e.target.value)
+            <button className={styles.num} onClick={e => {
+                setCalculator(calculator + e.target.value)
             }}
                 value={item}
                 key={item}>
@@ -18,40 +18,33 @@ const Calculator = () => {
 
     return (
         <div className={styles.wrapper}>
-            {/* input */}
-            <div className={styles.input}>{data}</div>
-            <div className={styles.btn}>{calcBtn}</div>
-            <div>
-                <button onClick={() => setData(data.substr(0, data.length - 1))} >Clear</button>
+            <div className={styles.input}>{calculator}</div>
+            <div className={styles.clearAC}>
+                <button className={styles.btnClearAC} onClick={() => setCalculator(calculator.substring(0, calculator.length -1 ))} >Clear</button>
+                <button  className={styles.btnClearAC} onClick={() => setCalculator("")} >AC</button>
             </div>
-            <div>
-                <button onClick={() => setData("")} >AC</button>
+            <div className={styles.btn}>
+                {calcBtn}
+                <button className={styles.math} onClick={e => {
+                    try {
+                        setCalculator(
+                            String(eval(calculator)).length > 3 &&
+                                String(eval(calculator)).includes(".")
+                                ? String(eval(calculator).toFixed(4))
+                                : String(eval(calculator))
+                        )
+                    }
+                    catch (error) {
+                        console.log(error)
+                    }
+                }} value="=" >=</button> 
+                <button className={styles.math} onClick={e => setCalculator(calculator + e.target.value)} value="+"  >+</button>
+                <button className={styles.math} onClick={e => setCalculator(calculator + e.target.value)} value="-"  >-</button>
+                <button className={styles.math} onClick={e => setCalculator(calculator + e.target.value)} value="/"  >/</button>
+                <button className={styles.math} onClick={e => setCalculator(calculator + e.target.value)} value="*"  >*</button>
+
+                
             </div>
-            <div>
-                <button onClick={e => setData(data + e.target.value)} value="+"  >+</button>
-            </div>
-            <div>
-                <button onClick={e => setData(data + e.target.value)} value="-"  >-</button>
-            </div>
-            <div>
-                <button onClick={e => setData(data + e.target.value)} value="/"  >/</button>
-            </div>
-            <div>
-                <button onClick={e => setData(data + e.target.value)} value="*"  >*</button>
-            </div>
-            <button onClick={e => {
-                try {
-                    setData(
-                        String(eval(data)).length > 3 &&
-                            String(eval(data)).includes(".")
-                            ? String(eval(data).toFixed(4))
-                            : String(eval(data))
-                    )
-                }
-                catch (error) {
-                    console.log(error)
-                }
-            }} value="=" >=</button>
         </div>
     )
 }
